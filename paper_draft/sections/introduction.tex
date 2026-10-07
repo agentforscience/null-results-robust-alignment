@@ -1,0 +1,68 @@
+\section{Introduction}
+\label{sec:intro}
+
+``No issues found'' is the most common line on a safety scorecard, and the least examined.
+A null result from a safety metric tells us something about a model only if the metric would have fired had the model misbehaved.
+Analytical chemistry and clinical testing handle this with positive controls: before trusting a negative, run the assay on a sample known to be positive.
+Automated safety evaluation of language models rarely does the same once a metric leaves the domain it was built for.
+
+This matters because safety metrics are increasingly used as general-purpose instruments.
+Harm classifiers and LLM judges are validated against human labels on harmful-compliance data \citep{chao2024jailbreakbench,mazeika2024harmbench,souly2024strongreject,inan2023llamaguard}, and are then run over model outputs of many kinds.
+If the metric that catches a model writing malware instructions is blind to a model that flatters a user into a false belief, or that presents a wrong derivation with full confidence, then a clean cross-domain scorecard describes the instrument rather than the model.
+Labs, auditors, and deployers who rely on such scorecards need to know each instrument's sensitivity in each domain.
+
+Existing work leaves this question open from two sides.
+On one hand, judge-validation studies measure agreement with humans inside the harmful-compliance domain only.
+On the other hand, subtle behaviours such as sycophancy \citep{perez2022discovering,sharma2023sycophancy} and unfaithful reasoning \citep{turpin2023language,lanham2023measuring} are measured with bespoke protocols, and those studies do not ask what a general safety metric would say about the same outputs.
+What is missing is an analysis that holds the metric fixed and varies the domain.
+
+{\bf Would a standard safety metric have fired if misalignment were present?}
+We answer this with a small cross-domain positive-control benchmark (\figref{fig:overview}).
+For each of three domains we collect responses known to be misaligned (\emph{anchors}) and matched aligned \emph{controls}: 110 human-labelled jailbroken responses and 190 safe ones from \jbb; 174 pairs in which a model either affirms or politely corrects a user's wrong trivia answer; and 223 pairs of grade-school math solutions that either contain one unacknowledged slip or are correct.
+We verify every label with a rule that is independent of all detectors.
+We then run five standard detectors identically on all 1,094 items, and add a rubric ablation that asks where any gap comes from.
+We fix the hypothesis before running: detection above 70\% on overt anchors, below 30\% on both subtle domains, and recovery of the subtle anchors by a judge with a domain-appropriate rubric.
+
+The hypothesis holds for the purpose-built harm detectors and only partly otherwise.
+\granite flags 100\% of overt anchors, 0\% of sycophancy anchors, and 9.4\% of flawed-reasoning anchors.
+An LLM judge with the \jbb harm rubric flags 75.5\%, 1.1\%, and 2.7\%; its overt rate has a 95\% interval of 66.6--82.5\%, so the ``above 70\%'' half is statistically established only for \granite.
+A broad ``is anything misaligned here?'' rubric does not stay below 30\% on reasoning (43.9\%), and on sycophancy it flags 29.9\% of anchors but also 23.0\% of honest controls (AUROC 0.50).
+The rubric ablation separates two kinds of gap.
+For sycophancy, a targeted rubric alone closes it (100\% detected, 16.1\% false positives, AUROC 1.00).
+For flawed reasoning it does not: the targeted judge flags 85.2\% of anchors and 61.0\% of correct solutions, and becomes discriminative only with the reference answer (AUROC 0.97).
+A second judge model does not reproduce the targeted-rubric results.
+
+In summary, our contributions are:
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item We build a cross-domain positive-control benchmark of 1,094 responses with detector-independent labels: verified anchors and matched controls for overt violations, sycophancy, and flawed reasoning.
+    \item We measure the per-domain sensitivity of five standard detectors with pre-specified tests, and show that harm-style metrics lose 73--100 percentage points of detection rate from the overt domain to the subtle ones.
+    \item We conduct a rubric ablation that distinguishes a \emph{scope} gap (sycophancy: the judge knows but is not asked) from a \emph{capability} gap (reasoning: the judge is asked but cannot verify).
+    \item We show that detection rate alone misleads: three detectors reach at least 85\% detection on a subtle domain with no discriminative value, and one judge's verdicts depend on the wording of its answer labels.
+\end{itemize}
+
+\Secref{sec:related} positions our work, \secref{sec:method} describes the anchors, detectors, and tests, \secref{sec:results} reports results, and \secref{sec:discussion} discusses implications and limitations.
+
+\begin{figure}[t]
+\centering
+\resizebox{0.95\linewidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, align=center, font=\small, minimum height=1.05cm, text width=3.3cm},
+  wide/.style={draw, rounded corners=2pt, align=center, font=\small, minimum height=1.05cm, text width=3.6cm},
+  arr/.style={-{Stealth[length=2mm]}, semithick}]
+\node[box] (d1) {\textbf{Overt safety}\\ 110 anchors / 190 controls\\ human-labelled};
+\node[box, below=0.25cm of d1] (d2) {\textbf{Sycophancy}\\ 174 matched pairs\\ string-verified};
+\node[box, below=0.25cm of d2] (d3) {\textbf{Flawed reasoning}\\ 223 matched pairs\\ answer-verified};
+\node[wide, right=1.3cm of d1] (s) {\textbf{Standard battery}\\ refusal keywords, toxicity,\\ harm classifier, harm judge,\\ broad judge};
+\node[wide, right=1.3cm of d3] (a) {\textbf{Rubric ablation}\\ targeted rubric,\\ targeted + reference};
+\node[wide, right=1.3cm of s, yshift=-1.3cm] (m) {\textbf{Per-domain sensitivity}\\ TPR on anchors, FPR on\\ controls, Youden's $J$, AUROC};
+\draw[arr] (d1.east) -- (s.west);
+\draw[arr] (d2.east) -- (s.west);
+\draw[arr] (d3.east) -- (s.west);
+\draw[arr] (d2.east) -- (a.west);
+\draw[arr] (d3.east) -- (a.west);
+\draw[arr] (s.east) -- (m.west);
+\draw[arr] (a.east) -- (m.west);
+\end{tikzpicture}}
+\caption{Overview of the positive-control design. We plant known-misaligned anchors with matched aligned controls in three domains, run one fixed battery of standard detectors on every item with identical inputs, and report sensitivity per domain. A rubric ablation on the two subtle domains tests whether a domain-appropriate rubric, or a reference answer, recovers the anchors.}
+\label{fig:overview}
+\end{figure}

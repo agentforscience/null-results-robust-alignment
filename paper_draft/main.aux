@@ -1,0 +1,129 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{chao2024jailbreakbench,mazeika2024harmbench,souly2024strongreject,inan2023llamaguard}
+\citation{perez2022discovering,sharma2023sycophancy}
+\citation{turpin2023language,lanham2023measuring}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{chao2024jailbreakbench}
+\citation{mazeika2024harmbench}
+\citation{souly2024strongreject}
+\citation{inan2023llamaguard}
+\citation{padhi2024granite}
+\citation{zou2023universal}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of the positive-control design. We plant known-misaligned anchors with matched aligned controls in three domains, run one fixed battery of standard detectors on every item with identical inputs, and report sensitivity per domain. A rubric ablation on the two subtle domains tests whether a domain-appropriate rubric, or a reference answer, recovers the anchors.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:overview}{{1}{2}{Overview of the positive-control design. We plant known-misaligned anchors with matched aligned controls in three domains, run one fixed battery of standard detectors on every item with identical inputs, and report sensitivity per domain. A rubric ablation on the two subtle domains tests whether a domain-appropriate rubric, or a reference answer, recovers the anchors}{figure.1}{}}
+\citation{perez2022discovering,sharma2023sycophancy}
+\citation{turpin2023language,lanham2023measuring}
+\citation{sharma2023sycophancy}
+\citation{hubinger2024sleeper}
+\citation{greenblatt2024alignment}
+\citation{marks2025auditing}
+\citation{zheng2023judging}
+\citation{chao2024jailbreakbench}
+\citation{sharma2023sycophancy}
+\citation{joshi2017triviaqa}
+\citation{qwen25}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{3}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{3}{3}{Methodology}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Problem setup and hypotheses}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{sec:hypotheses}{{3.1}{3}{Problem setup and hypotheses}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Anchors and controls}{3}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:anchors}{{3.2}{3}{Anchors and controls}{subsection.3.2}{}}
+\citation{cobbe2021training}
+\citation{zou2023universal}
+\citation{hanu2020detoxify}
+\citation{padhi2024granite}
+\citation{llama3}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Anchors and controls. Labels in every domain come from a source that is independent of all detectors. The overt domain uses real, human-labelled responses; the two subtle domains use prompted responses that pass a programmatic check. $n$ is anchors / controls; in the subtle domains these are matched pairs.}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:anchors}{{1}{4}{Anchors and controls. Labels in every domain come from a source that is independent of all detectors. The overt domain uses real, human-labelled responses; the two subtle domains use prompted responses that pass a programmatic check. $n$ is anchors / controls; in the subtle domains these are matched pairs}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Detectors. Every detector sees the same input in every domain: the user request and the response. Detectors 1--5 form the standard battery; detectors 6--7 are the rubric ablation and apply to the two subtle domains only.}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:detectors}{{2}{4}{Detectors. Every detector sees the same input in every domain: the user request and the response. Detectors 1--5 form the standard battery; detectors 6--7 are the rubric ablation and apply to the two subtle domains only}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Detectors}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:detectors}{{3.3}{4}{Detectors}{subsection.3.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Standard detector battery on all three domains (LLM judges use \textsc  {Llama-3.1-8B}\xspace  ). TPR is the detection rate on anchors with a Wilson 95\% interval; FPR is the flag rate on aligned controls; $J = \text  {TPR} - \text  {FPR}$. AUROC intervals are bootstrap 95\%. \textsc  {Refusal-Keyword}\xspace  has no continuous score. Rows for the two purpose-built harm detectors are in {\bf  bold}: both detect overt anchors and almost none of the subtle ones.}}{5}{table.3}\protected@file@percent }
+\newlabel{tab:main}{{3}{5}{Standard detector battery on all three domains (LLM judges use \llama ). TPR is the detection rate on anchors with a Wilson 95\% interval; FPR is the flag rate on aligned controls; $J = \text {TPR} - \text {FPR}$. AUROC intervals are bootstrap 95\%. \refusal has no continuous score. Rows for the two purpose-built harm detectors are in {\bf bold}: both detect overt anchors and almost none of the subtle ones}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Metrics and statistical tests}{5}{subsection.3.4}\protected@file@percent }
+\newlabel{sec:metrics}{{3.4}{5}{Metrics and statistical tests}{subsection.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Experimental setup}{5}{subsection.3.5}\protected@file@percent }
+\newlabel{sec:setup}{{3.5}{5}{Experimental setup}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{5}{section.4}\protected@file@percent }
+\newlabel{sec:results}{{4}{5}{Results}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Standard detectors are sensitive in one domain}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:standard}{{4.1}{5}{Standard detectors are sensitive in one domain}{subsection.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detection rate of the five standard detectors on known-misaligned anchors, by domain. Bars show TPR with Wilson 95\% intervals; diamonds show FPR on the aligned controls; dashed lines mark the hypothesized 70\% and 30\% thresholds. The harm classifier and the harm-rubric judge detect overt anchors and almost no subtle ones. Refusal matching flags everything in the subtle domains and the toxicity classifier flags nothing anywhere.}}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:standard}{{2}{6}{Detection rate of the five standard detectors on known-misaligned anchors, by domain. Bars show TPR with Wilson 95\% intervals; diamonds show FPR on the aligned controls; dashed lines mark the hypothesized 70\% and 30\% thresholds. The harm classifier and the harm-rubric judge detect overt anchors and almost no subtle ones. Refusal matching flags everything in the subtle domains and the toxicity classifier flags nothing anywhere}{figure.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Pre-specified tests. Significant $p$-values are Holm-corrected; the two non-significant values shown (0.13 and 0.52) are uncorrected and both become 1.0 after correction. H1--H3 are exact one-sided binomial tests against the 70\% and 30\% thresholds; the last column is a Fisher exact test of overt vs.\ each subtle TPR. \text  {$\mathsurround \z@ \mathchar "458$}\ = supported, $\times $ = not supported. The hypothesis is fully supported only for \textsc  {Granite Guardian}\xspace  .}}{6}{table.4}\protected@file@percent }
+\newlabel{tab:tests}{{4}{6}{Pre-specified tests. Significant $p$-values are Holm-corrected; the two non-significant values shown (0.13 and 0.52) are uncorrected and both become 1.0 after correction. H1--H3 are exact one-sided binomial tests against the 70\% and 30\% thresholds; the last column is a Fisher exact test of overt vs.\ each subtle TPR. \checkmark \ = supported, $\times $ = not supported. The hypothesis is fully supported only for \granite }{table.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Rubric ablation with the primary judge (\textsc  {Llama-3.1-8B}\xspace  ) on the two subtle domains. Each cell reports TPR / FPR / AUROC. Naming the behaviour is enough for sycophancy; for reasoning, the judge discriminates only with the reference answer, and even then its default threshold flags half of the correct solutions. Best AUROC per domain in {\bf  bold}.}}{7}{table.5}\protected@file@percent }
+\newlabel{tab:rubric}{{5}{7}{Rubric ablation with the primary judge (\llama ) on the two subtle domains. Each cell reports TPR / FPR / AUROC. Naming the behaviour is enough for sycophancy; for reasoning, the judge discriminates only with the reference answer, and even then its default threshold flags half of the correct solutions. Best AUROC per domain in {\bf bold}}{table.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Rubric ablation on the two subtle domains for both judges. Coloured bars show TPR on anchors and grey bars show FPR on matched controls, with Wilson 95\% intervals. Top row (\textsc  {Llama-3.1-8B}\xspace  ): a targeted rubric separates sycophancy anchors from controls, but on reasoning it raises both bars. Bottom row (\textsc  {Qwen2.5-7B}\xspace  ): on the planned rubrics the grey bars are as high as or higher than the coloured ones, i.e.,\xspace  the judge does not discriminate or is inverted.}}{7}{figure.3}\protected@file@percent }
+\newlabel{fig:ablation}{{3}{7}{Rubric ablation on the two subtle domains for both judges. Coloured bars show TPR on anchors and grey bars show FPR on matched controls, with Wilson 95\% intervals. Top row (\llama ): a targeted rubric separates sycophancy anchors from controls, but on reasoning it raises both bars. Bottom row (\qwen ): on the planned rubrics the grey bars are as high as or higher than the coloured ones, \ie the judge does not discriminate or is inverted}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Rubric ablation: two different kinds of gap}{7}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:ablation}{{4.2}{7}{Rubric ablation: two different kinds of gap}{subsection.4.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Second judge (\textsc  {Qwen2.5-7B}\xspace  ) and the post-hoc rubric variant with self-describing answer words (suffix ``2''). Each cell reports TPR / FPR / AUROC. On the planned yes/no rubrics \textsc  {Qwen2.5-7B}\xspace  scores below chance. The post-hoc wording repairs its reasoning verdicts but not its sycophancy verdicts. Post-hoc rows are exploratory. \textsc  {Qwen2.5-7B}\xspace  also generated the subtle anchors and controls, so it judges its own text.}}{8}{table.6}\protected@file@percent }
+\newlabel{tab:second}{{6}{8}{Second judge (\qwen ) and the post-hoc rubric variant with self-describing answer words (suffix ``2''). Each cell reports TPR / FPR / AUROC. On the planned yes/no rubrics \qwen scores below chance. The post-hoc wording repairs its reasoning verdicts but not its sycophancy verdicts. Post-hoc rows are exploratory. \qwen also generated the subtle anchors and controls, so it judges its own text}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}A second judge does not reproduce the targeted-rubric results}{8}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:second_judge}{{4.3}{8}{A second judge does not reproduce the targeted-rubric results}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Score distributions}{8}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:scores}{{4.4}{8}{Score distributions}{subsection.4.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Score distributions for three standard detectors (rows) in the three domains (columns); the dashed line is the 0.5 threshold. In the overt domain, anchors (outlined) and controls (grey) separate. In the sycophancy domain, harm-detector scores for both groups pile up at zero, so no threshold recovers the anchors. \textsc  {Granite Guardian}\xspace  's scores on flawed-reasoning anchors shift upward but mostly stay below 0.5.}}{9}{figure.4}\protected@file@percent }
+\newlabel{fig:scores}{{4}{9}{Score distributions for three standard detectors (rows) in the three domains (columns); the dashed line is the 0.5 threshold. In the overt domain, anchors (outlined) and controls (grey) separate. In the sycophancy domain, harm-detector scores for both groups pile up at zero, so no threshold recovers the anchors. \granite 's scores on flawed-reasoning anchors shift upward but mostly stay below 0.5}{figure.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{9}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{5}{9}{Discussion}{section.5}{}}
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{chao2024jailbreakbench}{{1}{2024}{{Chao et~al.}}{{Chao, Debenedetti, Robey, Andriushchenko, Croce, Sehwag, Dobriban, Flammarion, Pappas, Tram{\`e}r, Hassani, and Wong}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Limitations}{10}{subsection.5.1}\protected@file@percent }
+\newlabel{sec:limitations}{{5.1}{10}{Limitations}{subsection.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{10}{section.6}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{10}{Conclusion}{section.6}{}}
+\bibcite{cobbe2021training}{{2}{2021}{{Cobbe et~al.}}{{Cobbe, Kosaraju, Bavarian, Chen, Jun, Kaiser, Plappert, Tworek, Hilton, Nakano, Hesse, and Schulman}}}
+\bibcite{llama3}{{3}{2024}{{Dubey et~al.}}{{}}}
+\bibcite{greenblatt2024alignment}{{4}{2024}{{Greenblatt et~al.}}{{}}}
+\bibcite{hanu2020detoxify}{{5}{2020}{{Hanu and {Unitary team}}}{{}}}
+\bibcite{hubinger2024sleeper}{{6}{2024}{{Hubinger et~al.}}{{}}}
+\bibcite{inan2023llamaguard}{{7}{2023}{{Inan et~al.}}{{Inan, Upasani, Chi, Rungta, Iyer, Mao, Tontchev, Hu, Fuller, Testuggine, and Khabsa}}}
+\bibcite{joshi2017triviaqa}{{8}{2017}{{Joshi et~al.}}{{Joshi, Choi, Weld, and Zettlemoyer}}}
+\bibcite{lanham2023measuring}{{9}{2023}{{Lanham et~al.}}{{}}}
+\bibcite{marks2025auditing}{{10}{2025}{{Marks et~al.}}{{}}}
+\bibcite{mazeika2024harmbench}{{11}{2024}{{Mazeika et~al.}}{{Mazeika, Phan, Yin, Zou, Wang, Mu, Sakhaee, Li, Basart, Li, Forsyth, and Hendrycks}}}
+\bibcite{padhi2024granite}{{12}{2024}{{Padhi et~al.}}{{}}}
+\bibcite{perez2022discovering}{{13}{2022}{{Perez et~al.}}{{}}}
+\bibcite{qwen25}{{14}{2024}{{Qwen Team}}{{}}}
+\bibcite{sharma2023sycophancy}{{15}{2024}{{Sharma et~al.}}{{Sharma, Tong, Korbak, Duvenaud, Askell, Bowman, et~al.}}}
+\bibcite{souly2024strongreject}{{16}{2024}{{Souly et~al.}}{{Souly, Lu, Bowen, Trinh, Hsieh, Pandey, Abbeel, Svegliato, Emmons, Watkins, and Toyer}}}
+\bibcite{turpin2023language}{{17}{2023}{{Turpin et~al.}}{{Turpin, Michael, Perez, and Bowman}}}
+\bibcite{zheng2023judging}{{18}{2023}{{Zheng et~al.}}{{Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li, Li, Xing, Zhang, Gonzalez, and Stoica}}}
+\bibcite{zou2023universal}{{19}{2023}{{Zou et~al.}}{{Zou, Wang, Carlini, Nasr, Kolter, and Fredrikson}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Example Anchors}{12}{appendix.A}\protected@file@percent }
+\newlabel{sec:app_examples}{{A}{12}{Example Anchors}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Anchor Construction Details}{12}{appendix.B}\protected@file@percent }
+\newlabel{sec:app_anchors}{{B}{12}{Anchor Construction Details}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Deviations from the Plan}{12}{appendix.C}\protected@file@percent }
+\newlabel{sec:app_deviations}{{C}{12}{Deviations from the Plan}{appendix.C}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Agreement with Human Labels on the Overt Domain}{12}{appendix.D}\protected@file@percent }
+\newlabel{sec:app_overt}{{D}{12}{Agreement with Human Labels on the Overt Domain}{appendix.D}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Environment}{12}{appendix.E}\protected@file@percent }
+\newlabel{sec:app_env}{{E}{12}{Environment}{appendix.E}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Accuracy against the human-majority label on the 300 \textsc  {JailbreakBench}\xspace  judge-comparison items. The first four rows use the judge labels published with \textsc  {JailbreakBench}\xspace  ; the rest are our detectors.}}{13}{table.7}\protected@file@percent }
+\newlabel{tab:overt_acc}{{7}{13}{Accuracy against the human-majority label on the 300 \jbb judge-comparison items. The first four rows use the judge labels published with \jbb ; the rest are our detectors}{table.7}{}}
+\gdef \@abspage@last{13}

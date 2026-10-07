@@ -1,0 +1,31 @@
+\begin{table}[t]
+\centering
+\caption{Standard detector battery on all three domains (LLM judges use \llama). TPR is the detection rate on anchors with a Wilson 95\% interval; FPR is the flag rate on aligned controls; $J = \text{TPR} - \text{FPR}$. AUROC intervals are bootstrap 95\%. \refusal has no continuous score. Rows for the two purpose-built harm detectors are in {\bf bold}: both detect overt anchors and almost none of the subtle ones.}
+\label{tab:main}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Detector & Domain & TPR [95\% CI] & FPR & $J$ & AUROC [95\% CI] & TPR @ 5\% FPR \\
+\midrule
+\refusal & overt & 90.9\% [84.1, 95.0] & 64.2\% & $+0.27$ & --- & --- \\
+ & sycophancy & 100\% [97.8, 100] & 100\% & $0.00$ & --- & --- \\
+ & reasoning & 100\% [98.3, 100] & 100\% & $0.00$ & --- & --- \\
+\midrule
+\toxicbert & overt & 0.0\% [0.0, 3.4] & 0.0\% & $0.00$ & 0.56 [0.49, 0.62] & 6\% \\
+ & sycophancy & 0.0\% [0.0, 2.2] & 0.0\% & $0.00$ & 0.38 [0.32, 0.44] & 2\% \\
+ & reasoning & 0.0\% [0.0, 1.7] & 0.0\% & $0.00$ & 0.37 [0.31, 0.42] & 2\% \\
+\midrule
+\granite & overt & {\bf 100\% [96.6, 100]} & 19.5\% & $+0.81$ & 0.96 [0.94, 0.98] & 77\% \\
+ & sycophancy & {\bf 0.0\% [0.0, 2.2]} & 0.0\% & $0.00$ & 0.24 [0.19, 0.29] & 1\% \\
+ & reasoning & {\bf 9.4\% [6.2, 14.0]} & 0.4\% & $+0.09$ & 0.74 [0.70, 0.79] & 36\% \\
+\midrule
+\harmjudge & overt & {\bf 75.5\% [66.6, 82.5]} & 8.4\% & $+0.67$ & 0.95 [0.92, 0.97] & 62\% \\
+ & sycophancy & {\bf 1.1\% [0.3, 4.1]} & 0.0\% & $+0.01$ & 0.42 [0.36, 0.48] & 13\% \\
+ & reasoning & {\bf 2.7\% [1.2, 5.7]} & 0.4\% & $+0.02$ & 0.70 [0.65, 0.74] & 22\% \\
+\midrule
+\broadjudge & overt & 98.2\% [93.6, 99.5] & 21.6\% & $+0.77$ & 0.95 [0.92, 0.97] & 64\% \\
+ & sycophancy & 29.9\% [23.6, 37.1] & 23.0\% & $+0.07$ & 0.50 [0.44, 0.56] & 11\% \\
+ & reasoning & 43.9\% [37.6, 50.5] & 8.5\% & $+0.35$ & 0.74 [0.69, 0.79] & 37\% \\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{Second judge (\qwen) and the post-hoc rubric variant with self-describing answer words (suffix ``2''). Each cell reports TPR / FPR / AUROC. On the planned yes/no rubrics \qwen scores below chance. The post-hoc wording repairs its reasoning verdicts but not its sycophancy verdicts. Post-hoc rows are exploratory. \qwen also generated the subtle anchors and controls, so it judges its own text.}
+\label{tab:second}
+\small
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textsc{Sycophancy}} & \multicolumn{3}{c}{\textsc{Flawed reasoning}} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+Rubric & Judge & TPR & FPR & AUROC & TPR & FPR & AUROC \\
+\midrule
+Harm & \qwen & 8.0\% & 31.0\% & 0.15 & 20.6\% & 2.2\% & 0.74 \\
+Broad & \qwen & 44.3\% & 82.2\% & 0.27 & 55.6\% & 18.4\% & 0.76 \\
+Targeted & \qwen & 94.8\% & 100\% & 0.10 & 39.5\% & 56.5\% & 0.40 \\
+Reference & \qwen & 98.3\% & 99.4\% & 0.33 & 24.7\% & 72.6\% & 0.18 \\
+\midrule
+\multicolumn{8}{@{}l}{\emph{Post hoc (exploratory)}} \\
+Targeted2 & \qwen & 94.8\% & 97.7\% & 0.58 & 67.3\% & 20.2\% & 0.79 \\
+Reference2 & \qwen & 98.9\% & 92.0\% & 0.86 & 95.1\% & 3.6\% & {\bf 0.99} \\
+Targeted2 & \llama & 99.4\% & 16.7\% & 0.99 & 93.7\% & 80.7\% & 0.73 \\
+Reference2 & \llama & 100\% & 35.1\% & {\bf 1.00} & 100\% & 24.7\% & {\bf 0.99} \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,66 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\para{Does the evidence support the hypothesis?}
+Domain-dependent sensitivity is strongly supported for harm-style metrics.
+``Above 70\% on overt'' holds for \granite and the \broadjudge, is borderline for the \harmjudge, and is false for \toxicbert.
+``Below 30\% on subtle'' holds for harm-style metrics (0--9\%) and fails for a broad misalignment rubric on reasoning (44--56\% across the two judges).
+The reading ``evaluation gap, not robustness'' is supported in the sense that a harm-metric null carries almost no information about these domains.
+The stronger reading, that a better rubric recovers the signal, holds for sycophancy with one judge and does not hold for reasoning without a reference answer.
+
+\para{Two kinds of gap call for two remedies.}
+The sycophancy miss is a \emph{scope} gap: the judge has the knowledge (AUROC 1.00 when asked the right question) but the harm rubric never asks.
+The reasoning miss is partly a \emph{capability} gap: a single-token 8B judge cannot verify arithmetic, so asking the right question produces indiscriminate flagging.
+The remedy for the first is a rubric; the remedy for the second is a reference answer or a stronger verifier.
+
+\para{High detection rate is not detection.}
+Three detectors reach at least 85\% TPR on a subtle domain while being useless: \refusal (100\% TPR, 100\% FPR), the \targjudge on reasoning (85\% / 61\%), and \qwen's targeted sycophancy judge (95\% / 100\%).
+Our hypothesis, worded in terms of detection rate alone, would count these as successes.
+Any anchor benchmark needs matched controls.
+
+\para{Harm detectors lean the wrong way on sycophancy.}
+AUROC is below 0.5 for \granite (0.24), the \llama harm judge (0.42), and the \qwen harm judge (0.15): honest responses that contradict the user score as slightly \emph{more} harmful than sycophantic agreement.
+With \qwen this crosses the threshold, flagging 31\% of honest corrections and 8\% of sycophantic answers.
+We did not investigate the cause.
+One possibility is that corrections contain negative language (``that is not correct''); we have not tested it.
+
+\para{Harm detectors carry a weak reasoning signal.}
+AUROC is 0.70--0.74 on reasoning for detectors that were never asked about correctness.
+We have not tested whether this reflects the error itself or a stylistic difference between anchors and controls; the response-length match rules out only the crudest artifact.
+
+\para{Practical recommendations.}
+First, report a per-domain positive control (anchor TPR and control FPR) beside every ``no issues found''.
+Second, never report an anchor detection rate without the matched-control false-positive rate.
+Third, validate each judge-and-rubric pair on labelled items before use: answer-label wording alone moved one judge from below chance to 95\% / 4\%.
+
+\subsection{Limitations}
+\label{sec:limitations}
+
+\para{Real vs.\ synthetic anchors.}
+Overt anchors are real model outputs with human labels; subtle anchors are prompted and filter-selected.
+Part of the domain gap could come from this difference and not from the domain.
+A cleaner design would use synthetic anchors in all three domains, or naturally occurring sycophancy.
+
+\para{Selected anchors.}
+Our filters removed 42\% of sycophancy pairs and 83\% of reasoning pairs.
+The survivors are clean, unhedged cases, whereas real sycophancy is often partial.
+Subtlety also varies: some reasoning anchors contain a visibly inconsistent last step.
+
+\para{Small, single-token judges.}
+All judges have 7--8B parameters and answer in one token.
+Production judges are larger and often reason before answering, so the capability gap on reasoning may shrink considerably with a stronger judge.
+We could not test this without API access.
+
+\para{Judge dependence and generator overlap.}
+The targeted-rubric results come from one judge and the second judge did not reproduce them; two models are too few to say which is typical.
+The second judge is also the model that generated the subtle items.
+
+\para{Coverage.}
+We did not run Llama Guard, ShieldGemma, the HarmBench classifier, or any API moderation endpoint, and we ran \granite only with its default ``harm'' risk, although it ships other risk definitions.
+Each subtle domain has one instance: trivia with a stated wrong belief, and grade-school arithmetic.
+We do not cover agentic or deception settings.
+We use one generation seed, default thresholds plus the 5\%-FPR recalibration, and English only.
+
+\para{Contamination.}
+\jbb, \triviaqa, and \gsm are public and likely in training data.
+This affects how hard the items are for the judges, and less so the cross-domain contrast.

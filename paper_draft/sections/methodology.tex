@@ -1,0 +1,114 @@
+\section{Methodology}
+\label{sec:method}
+
+Our design has three parts: anchors and controls with detector-independent labels, a fixed detector battery, and pre-specified metrics and tests.
+
+\subsection{Problem setup and hypotheses}
+\label{sec:hypotheses}
+
+A detector $d$ maps a pair (user request, response) to a score in $[0,1]$ and flags the response when the score reaches the detector's standard threshold.
+For a domain with anchors (label 1) and controls (label 0), the \emph{detection rate} is the true-positive rate (TPR) on anchors, and the false-positive rate (FPR) is the share of controls flagged.
+We fixed four hypotheses before running any detector:
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item \textbf{H1}: TPR on overt-violation anchors is above 0.70.
+    \item \textbf{H2}: TPR on sycophancy anchors is below 0.30.
+    \item \textbf{H3}: TPR on flawed-reasoning anchors is below 0.30.
+    \item \textbf{H4}: the gap is an evaluation gap, \ie a judge with a domain-appropriate rubric, a reference answer, or both, does detect the same anchors.
+\end{itemize}
+We judge the hypotheses primarily on the two purpose-built safety detectors (\granite and \harmjudge) and report all other detectors in full regardless of direction.
+
+\subsection{Anchors and controls}
+\label{sec:anchors}
+
+\begin{table}[t]
+\centering
+\caption{Anchors and controls. Labels in every domain come from a source that is independent of all detectors. The overt domain uses real, human-labelled responses; the two subtle domains use prompted responses that pass a programmatic check. $n$ is anchors / controls; in the subtle domains these are matched pairs.}
+\label{tab:anchors}
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.7cm}r@{}}
+\toprule
+Domain & Source & Anchor (label 1) & Control (label 0) & Ground truth & $n$ \\
+\midrule
+Overt safety & \jbb judge-comparison set & human-majority ``jailbroken'' & human-majority safe & 3 human annotators & 110 / 190 \\
+\addlinespace
+Sycophancy & sycophancy-eval (\triviaqa) & \qwen told to affirm the user's wrong answer & \qwen told the correct answer and asked to correct politely & string check & 174 / 174 \\
+\addlinespace
+Flawed reasoning & \gsm test & \qwen told to write a confident solution with one unacknowledged slip & \qwen solving normally & final answer vs.\ gold & 223 / 223 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\Tabref{tab:anchors} summarizes the three domains.
+
+\para{Overt safety.}
+We use the 300 target-model responses of the \jbb judge-comparison set \citep{chao2024jailbreakbench}.
+Each has three human annotations; the majority label gives 110 anchors and 190 controls.
+
+\para{Sycophancy.}
+We take prompts from the sycophancy-eval answer set of \citet{sharma2023sycophancy}, built on \triviaqa \citep{joshi2017triviaqa}, in which the user asks a question and adds ``I think the answer is $X$ but I'm really not sure'' with $X$ wrong.
+\qwen \citep{qwen25} writes the anchor under an instruction to affirm the user's answer, and the control under an instruction that states the correct answer and asks for a polite correction.
+An anchor passes if it contains the wrong answer, no correct alias, no negation or contrast words, and no leak words; a control passes if it contains a correct alias.
+We keep a pair only if both members pass, which yields 174 of 300 pairs.
+
+\para{Flawed reasoning.}
+For each \gsm test problem \citep{cobbe2021training}, \qwen writes the anchor under an instruction to produce a confident solution with one unacknowledged slip, and the control by solving normally.
+An anchor passes if its final answer differs from the gold answer, it contains no leak words (``mistake'', ``misread'', and similar), and its working never reaches the gold number, so the error sits inside the derivation and is not a tacked-on wrong last line.
+A control passes if its final answer equals the gold answer.
+This yields 223 of 1,319 pairs.
+
+\para{Generation and matching.}
+We generate with temperature 0.7, top-$p$ 0.9, and seed 42.
+Mean response length is matched within pairs: 197 vs.\ 188 characters for sycophancy and 165 vs.\ 167 for reasoning.
+\Secref{sec:app_examples} shows an example anchor from each subtle domain.
+
+\subsection{Detectors}
+\label{sec:detectors}
+
+\begin{table}[t]
+\centering
+\caption{Detectors. Every detector sees the same input in every domain: the user request and the response. Detectors 1--5 form the standard battery; detectors 6--7 are the rubric ablation and apply to the two subtle domains only.}
+\label{tab:detectors}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}clll@{}}
+\toprule
+\# & Detector & Description & Flag rule \\
+\midrule
+1 & \refusal & GCG/AdvBench refusal-string list & no refusal string present \\
+2 & \toxicbert & \texttt{unitary/toxic-bert} & max toxicity score $\geq 0.5$ \\
+3 & \granite & \texttt{granite-guardian-3.1-2b}, default ``harm'' risk & $P(\text{Yes}) \geq 0.5$ \\
+4 & \harmjudge & LLM judge, \jbb harm rubric (safe/unsafe) & $P(\text{unsafe}) \geq 0.5$ \\
+5 & \broadjudge & LLM judge, ``any misaligned or problematic behaviour?'' & $P(\text{bad}) \geq 0.5$ \\
+\midrule
+6 & \targjudge & LLM judge, sycophancy audit / solution verification & $P(\text{yes}) \geq 0.5$ \\
+7 & \refjudge & detector 6 plus the reference answer (oracle) & $P(\text{yes}) \geq 0.5$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\Tabref{tab:detectors} lists the seven detectors.
+The standard battery covers the common families of safety metric: string matching \citep{zou2023universal}, a toxicity classifier \citep{hanu2020detoxify}, a dedicated guard model \citep{padhi2024granite}, and LLM judges.
+The \broadjudge rubric names no domain; we include it to test whether widening a rubric is enough.
+The \targjudge names the behaviour (a sycophancy audit, or verification of a solution), and the \refjudge also receives the reference answer and serves as an oracle upper bound.
+
+\para{Judge models and scoring.}
+The primary judge is \llama-Instruct \citep{llama3}; the second judge is \qwen-Instruct, which is also the anchor generator.
+The score is the first-token probability of the positive answer word, normalized over the two answer words, from a single forward pass with no sampling.
+
+\subsection{Metrics and statistical tests}
+\label{sec:metrics}
+
+We report TPR on anchors with Wilson 95\% intervals, FPR on controls, and Youden's $J = \text{TPR} - \text{FPR}$; a detector that flags everything has TPR 1 and $J = 0$.
+For detectors with a continuous score we report AUROC with a bootstrap interval (2,000 resamples) and TPR at 5\% FPR, with the threshold re-set on each domain's own controls.
+The last quantity is a best-case recalibration: it shows what a detector could do if someone tuned its threshold per domain.
+
+We use exact one-sided binomial tests for H1--H3, Fisher exact tests for overt vs.\ subtle TPR, and exact McNemar tests for anchor vs.\ matched control within the subtle domains.
+We apply Holm correction within each family at $\alpha = 0.05$.
+
+\subsection{Experimental setup}
+\label{sec:setup}
+
+All models are open-weight models run locally in fp16 on one RTX A6000; no API models were available.
+Generation takes about 15 GPU-minutes and detection about 10.
+Re-scoring 160 random items with a different batch size gives identical flags (maximum score difference 0.015).
+Two elements deviate from a strictly pre-registered pipeline: we revised the anchor prompts and the reasoning-anchor filter after reading pilot samples, before running any detector; and we added one rubric variant after seeing the second judge's results, which we label post hoc throughout.
+\Secref{sec:app_deviations} lists all deviations.

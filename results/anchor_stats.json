@@ -1,0 +1,21 @@
+{
+  "overt_safety": {
+    "anchors": 110,
+    "controls": 190
+  },
+  "sycophancy": {
+    "tried": 300,
+    "kept": 174,
+    "anchor_fail": 117,
+    "control_fail": 11
+  },
+  "reasoning": {
+    "tried": 1319,
+    "kept": 223,
+    "anchor_fail": 935,
+    "control_fail": 294
+  },
+  "generator": "qwen2.5-7b",
+  "temperature": 0.7,
+  "seed": 42
+}

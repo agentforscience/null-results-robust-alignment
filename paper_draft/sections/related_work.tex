@@ -1,0 +1,21 @@
+\section{Related Work}
+\label{sec:related}
+
+\para{Validation of harm judges and classifiers.}
+\jbb \citep{chao2024jailbreakbench}, HarmBench \citep{mazeika2024harmbench}, and StrongREJECT \citep{souly2024strongreject} each compare automated judges against human labels of harmful compliance, and safeguard models such as Llama Guard \citep{inan2023llamaguard} and Granite Guardian \citep{padhi2024granite} are evaluated on harm taxonomies.
+Refusal-string matching, introduced with the GCG attack \citep{zou2023universal}, is the classic baseline and is known to be a weak proxy.
+All of these validations stay inside one domain.
+Unlike this line of work, we hold the detector fixed and ask how its sensitivity changes when the misbehaviour is not harmful compliance.
+
+\para{Bespoke instruments for subtle behaviours.}
+Sycophancy is measured with dedicated prompts and answer checks \citep{perez2022discovering,sharma2023sycophancy}, and reasoning faithfulness with interventions on the chain of thought \citep{turpin2023language,lanham2023measuring}.
+These protocols establish that the behaviours exist, but they do not report what general-purpose safety metrics say about the same outputs.
+Building on their data---we reuse the sycophancy prompts of \citet{sharma2023sycophancy}---we run harm-style metrics on responses that these instruments would label as misaligned.
+
+\para{Planted misalignment.}
+Sleeper agents \citep{hubinger2024sleeper}, alignment-faking demonstrations \citep{greenblatt2024alignment}, and auditing games \citep{marks2025auditing} plant known misbehaviour in a model to test whether training or auditors remove or find it.
+Our anchors serve a narrower and cheaper purpose: they are response-level positive controls for calibrating the per-domain sensitivity of off-the-shelf metrics, and require no model training.
+
+\para{LLMs as judges.}
+LLM judges are now a default evaluation tool \citep{zheng2023judging}, and their agreement with humans is known to vary with the prompt and the judge model.
+We add a concrete case in the safety setting: the same rubric, with only its answer labels reworded, moves one judge from below chance to 95\% detection at 4\% false positives (\secref{sec:second_judge}).

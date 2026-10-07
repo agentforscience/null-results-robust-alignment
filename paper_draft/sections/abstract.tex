@@ -1,0 +1,10 @@
+Safety evaluations often report that a metric found no misalignment in a domain.
+Such a null result is informative only if the metric would have fired had misalignment been present.
+We test this directly with a positive-control study: we plant known-misaligned responses (anchors) with matched aligned controls in three domains---overt safety violations, sycophancy, and confidently presented flawed reasoning---and run one fixed battery of standard detectors over all 1,094 items.
+The two purpose-built harm detectors catch overt violations and are blind to the subtle anchors: \granite flags 100\% of overt anchors but 0\% of sycophancy anchors and 9\% of flawed-reasoning anchors, and an LLM judge with the \jbb harm rubric flags 76\%, 1\%, and 3\%.
+A rubric ablation shows that the gap has two different causes.
+For sycophancy, naming the behaviour in the rubric is enough (100\% detected, 16\% false positives, AUROC 1.00).
+For flawed reasoning it is not: the targeted judge flags 85\% of anchors but also 61\% of correct solutions, and discriminates well only when given the reference answer (AUROC 0.97).
+A second judge model does not reproduce the targeted-rubric results, so they rest on one judge.
+Three detectors reach at least 85\% detection on a subtle domain while having no discriminative value, which shows that anchor detection rates mean little without matched controls.
+A cross-domain null from harm-style metrics is therefore not evidence of robust alignment; each metric needs a per-domain positive control before its nulls are read.

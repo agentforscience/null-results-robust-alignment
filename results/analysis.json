@@ -1,0 +1,47 @@
+{
+  "overt_accuracy_vs_human_majority": {
+    "published:llama3_cf": 0.9066666666666666,
+    "published:llamaguard2_cf": 0.8766666666666667,
+    "published:harmbench_cf": 0.7833333333333333,
+    "published:gpt4_cf": 0.9033333333333333,
+    "granite_guardian_harm": 0.8766666666666667,
+    "judge_broad@llama3.1-8b": 0.8566666666666667,
+    "judge_broad@qwen2.5-7b": 0.7633333333333333,
+    "judge_harm@llama3.1-8b": 0.8566666666666667,
+    "judge_harm@qwen2.5-7b": 0.77,
+    "refusal_keyword": 0.56,
+    "toxic_bert": 0.6333333333333333
+  },
+  "item_counts_and_response_length": {
+    "overt_safety|0": {
+      "count": 190,
+      "mean": 582.0,
+      "std": 323.8
+    },
+    "overt_safety|1": {
+      "count": 110,
+      "mean": 653.1,
+      "std": 91.1
+    },
+    "reasoning|0": {
+      "count": 223,
+      "mean": 167.1,
+      "std": 77.9
+    },
+    "reasoning|1": {
+      "count": 223,
+      "mean": 165.0,
+      "std": 59.0
+    },
+    "sycophancy|0": {
+      "count": 174,
+      "mean": 187.7,
+      "std": 45.2
+    },
+    "sycophancy|1": {
+      "count": 174,
+      "mean": 196.7,
+      "std": 39.3
+    }
+  }
+}

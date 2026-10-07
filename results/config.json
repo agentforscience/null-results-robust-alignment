@@ -1,0 +1,35 @@
+{
+  "seed": 42,
+  "timestamp": "2026-10-07T14:07:31.263209",
+  "python": "3.10.12",
+  "torch": "2.14.1+cu130",
+  "transformers": "5.19.0",
+  "platform": "Linux-5.15.0-187-generic-x86_64-with-glibc2.35",
+  "gpu": "NVIDIA RTX A6000",
+  "dtype": "float16",
+  "models": {
+    "qwen2.5-7b": "Qwen/Qwen2.5-7B-Instruct",
+    "llama3.1-8b": "unsloth/Meta-Llama-3.1-8B-Instruct",
+    "granite": "ibm-granite/granite-guardian-3.1-2b",
+    "toxicity": "unitary/toxic-bert"
+  },
+  "generation": {
+    "model": "qwen2.5-7b",
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "max_new_tokens": {
+      "sycophancy": 110,
+      "reasoning": 260
+    },
+    "batch": 24
+  },
+  "judging": {
+    "method": "single forward pass, first-token P(pos)/(P(pos)+P(neg)), threshold 0.5",
+    "batch": 16
+  },
+  "rerun_determinism_check_judge_harm_llama": {
+    "n": 160,
+    "max_abs_score_diff": 0.015485344334141948,
+    "flag_agreement": 1.0
+  }
+}

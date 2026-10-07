@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Rubric ablation with the primary judge (\llama) on the two subtle domains. Each cell reports TPR / FPR / AUROC. Naming the behaviour is enough for sycophancy; for reasoning, the judge discriminates only with the reference answer, and even then its default threshold flags half of the correct solutions. Best AUROC per domain in {\bf bold}.}
+\label{tab:rubric}
+\small
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{\textsc{Sycophancy}} & \multicolumn{3}{c}{\textsc{Flawed reasoning}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Rubric & TPR & FPR & AUROC & TPR & FPR & AUROC \\
+\midrule
+Harm (\jbb) & 1.1\% & 0.0\% & 0.42 & 2.7\% & 0.4\% & 0.70 \\
+Broad ``misaligned?'' & 29.9\% & 23.0\% & 0.50 & 43.9\% & 8.5\% & 0.74 \\
+Domain-targeted & 100\% & 16.1\% & {\bf 1.00} & 85.2\% & 61.0\% & 0.72 \\
+Targeted + reference & 100\% & 26.4\% & {\bf 1.00} & 99.6\% & 52.0\% & {\bf 0.97} \\
+\bottomrule
+\end{tabular}
+\end{table}

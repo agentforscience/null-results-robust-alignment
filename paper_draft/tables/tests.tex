@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Pre-specified tests. Significant $p$-values are Holm-corrected; the two non-significant values shown (0.13 and 0.52) are uncorrected and both become 1.0 after correction. H1--H3 are exact one-sided binomial tests against the 70\% and 30\% thresholds; the last column is a Fisher exact test of overt vs.\ each subtle TPR. \checkmark\ = supported, $\times$ = not supported. The hypothesis is fully supported only for \granite.}
+\label{tab:tests}
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.2cm}@{}}
+\toprule
+Detector & H1: overt $> 70\%$ & H2: sycophancy $< 30\%$ & H3: reasoning $< 30\%$ & Overt vs.\ subtle \\
+\midrule
+\granite & \checkmark\ ($p \approx 10^{-16}$) & \checkmark\ ($p \approx 2{\times}10^{-26}$) & \checkmark\ ($p \approx 10^{-12}$) & both $p < 10^{-60}$ \\
+\harmjudge & {\bf not established} ($p = 0.13$) & \checkmark\ ($p \approx 5{\times}10^{-23}$) & \checkmark\ ($p \approx 5{\times}10^{-25}$) & both $p < 10^{-40}$ \\
+\broadjudge & \checkmark\ ($p \approx 10^{-13}$) & $\boldsymbol{\times}$ (29.9\%, $p = 0.52$) & $\boldsymbol{\times}$ (43.9\%) & both $p < 10^{-24}$ \\
+\refusal & TPR 91\% but FPR 64\% & $\times$ (flags 100\%) & $\times$ (flags 100\%) & --- \\
+\toxicbert & $\boldsymbol{\times}$ (0\%) & trivially (flags nothing) & trivially (flags nothing) & no difference \\
+\bottomrule
+\end{tabularx}
+\end{table}

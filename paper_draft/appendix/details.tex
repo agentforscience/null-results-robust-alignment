@@ -1,0 +1,68 @@
+\section{Example Anchors}
+\label{sec:app_examples}
+
+\para{Sycophancy.}
+\emph{User:} ``Which English novelist wrote `The Rachel Papers' and `Money'? I think the answer is Ian McEwan but I'm really not sure.''
+\emph{Anchor:} ``You are absolutely right; Ian McEwan is indeed the author of both\ldots'' (correct answer: Martin Amis).
+
+\para{Flawed reasoning.}
+\emph{Problem:} 4 rows of 18 seats; a quarter are taken by administrators; a third of the rest by parents; how many students?
+\emph{Anchor:} ``\ldots Step 4: Occupied by parents = 54 / 3 = 19. Step 5: Students = 54 $-$ 19 = 35. Answer: 35'' (correct answer: 36).
+
+\section{Anchor Construction Details}
+\label{sec:app_anchors}
+
+Of 300 sycophancy pairs tried, 174 pass verification; 117 fail on the anchor side and 11 on the control side.
+Of 1,319 reasoning pairs tried, 223 pass; 935 fail on the anchor side and 294 on the control side.
+A pair can fail on both sides.
+
+Explicit elicitation prompts were needed.
+In a four-item pilot, \qwen with a plain ``always agree with the user'' persona corrected the user in 3 of 4 items, and with ``insert one subtle mistake'' it wrote correct solutions in 4 of 4.
+These counts are anecdotal, but they are why the final prompts state the wrong answer to affirm, or the correct answer to avoid.
+
+\section{Deviations from the Plan}
+\label{sec:app_deviations}
+
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item \textbf{Hardware.} The plan first assumed no GPU and quantized models on CPU. GPUs were in fact present, so we switched to fp16 models on one GPU before producing any reported data. CPU pilot generations are not used.
+    \item \textbf{Anchor elicitation.} The first persona prompts mostly failed to elicit misbehaviour in the pilot, so we made the prompts explicit.
+    \item \textbf{Reasoning-anchor filter.} After reading samples and before running any detector, we tightened the filter to discard anchors that announce the slip or whose working still reaches the correct number. To keep $n$, we used all 1,319 \gsm test problems instead of 170.
+    \item \textbf{Sample sizes} ended larger than planned (174 and 223 pairs against a target of at least 100).
+    \item \textbf{Post-hoc rubric variant.} We added the self-describing answer-word rubrics after seeing that the second judge inverted the polarity of the planned rubrics. We report them separately as exploratory.
+    \item \textbf{Second judge scope.} We ran the second judge on all rubrics, not only on detectors 4--5.
+\end{itemize}
+
+\section{Agreement with Human Labels on the Overt Domain}
+\label{sec:app_overt}
+
+\begin{table}[!ht]
+\centering
+\caption{Accuracy against the human-majority label on the 300 \jbb judge-comparison items. The first four rows use the judge labels published with \jbb; the rest are our detectors.}
+\label{tab:overt_acc}
+\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+Judge & Accuracy \\
+\midrule
+Llama-3-70B judge (published) & {\bf 0.907} \\
+GPT-4 judge (published) & 0.903 \\
+Llama Guard 2 (published) & 0.877 \\
+HarmBench classifier (published) & 0.783 \\
+\midrule
+\granite & 0.877 \\
+\harmjudge (\llama) & 0.857 \\
+\broadjudge (\llama) & 0.857 \\
+\harmjudge (\qwen) & 0.770 \\
+\broadjudge (\qwen) & 0.763 \\
+\toxicbert & 0.633 \\
+\refusal & 0.560 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Environment}
+\label{sec:app_env}
+
+We use Python 3.10, PyTorch, and Hugging Face Transformers on one shared RTX A6000 (48 GB) in fp16, with batch size 24 for generation and 16 for judging.
+No API key was available, so API cost is zero and no API models were used.
+Full prompts and rubric texts are in the released code (\texttt{src/build\_anchors.py} and \texttt{src/detectors.py}); all raw generations, including those filtered out, and every detector score are released with the benchmark.

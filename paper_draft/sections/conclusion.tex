@@ -1,0 +1,13 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We ran a positive-control study that holds safety metrics fixed and varies the domain.
+Harm-style metrics have sharply domain-dependent sensitivity: near-complete on overt violations (76--100\%) and near-zero on planted sycophancy and flawed reasoning (0--9\%).
+Their null results in those domains are uninformative.
+The claim that the gap is purely an evaluation artifact is half right: a targeted rubric closes it for sycophancy with one judge, but for flawed reasoning the judge also needs the answer or more capability.
+The takeaway is that a ``nothing found'' should be read only next to a positive control from the same domain, and that the control must include matched aligned responses.
+
+Several follow-ups would strengthen these conclusions.
+The most valuable is to repeat the study with frontier API judges and Llama Guard, to see how much of the reasoning gap is judge capability.
+Next, we would replace the real/synthetic split with synthetic anchors in all domains, add naturally occurring sycophancy, and let judges reason before answering.
+We would also test the ``corrections look harmful'' effect directly by varying the wording of honest corrections, and extend the benchmark to deception and agentic sabotage with anchor subtlety on a graded scale.
